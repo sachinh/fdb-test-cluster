@@ -25,7 +25,7 @@ apt-get clean && apt-get update
 apt-get install -y -qq build-essential python linux-aws sysstat iftop htop iotop ne
 
 # install fdbtop
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 apt-get install -y -qq nodejs
 npm install -g fdbtop
 
@@ -34,12 +34,12 @@ npm install -g fdbtop
 cd /tmp
 
 # download the dependencies
-wget https://www.foundationdb.org/downloads/5.2.5/ubuntu/installers/foundationdb-clients_5.2.5-1_amd64.deb
-wget https://www.foundationdb.org/downloads/5.2.5/ubuntu/installers/foundationdb-server_5.2.5-1_amd64.deb
+wget https://www.foundationdb.org/downloads/6.3.15/ubuntu/installers/foundationdb-clients_6.3.15-1_amd64.deb
+wget https://www.foundationdb.org/downloads/6.3.15/ubuntu/installers/foundationdb-server_6.3.15-1_amd64.deb
 
 # server depends on the client packages
-dpkg -i foundationdb-clients_5.2.5-1_amd64.deb
-dpkg -i foundationdb-server_5.2.5-1_amd64.deb
+dpkg -i foundationdb-clients_6.3.15-1_amd64.deb
+dpkg -i foundationdb-server_6.3.15-1_amd64.deb
 
 # stop the service
 service foundationdb stop
