@@ -1,7 +1,7 @@
 {
     "variables": {
-        "aws_access_key": "{{ aws_secretsmanager `Packer_keys` `Packer_AK` }}",
-        "aws_secret_key": "{{ aws_secretsmanager `Packer_keys` `Packer_SK` }}"
+        "aws_access_key": "{{ aws_secretsmanager `fdb_keys` `fdb_keys_AK` }}",
+        "aws_secret_key": "{{ aws_secretsmanager `fdb_keys` `fdb_keys_SK` }}"
     },
     "builders": [
         {
