@@ -6,7 +6,7 @@ RESET=$(shell tput sgr0)
 VARS=".secret.aws.tfvars"
 CURRENT_FOLDER=$(shell basename "$$(pwd)")
 
-# Extract output simpler with jq
+# Extract output with jq
 MASTER_ADDR=$(shell terraform output -json fdb_address | jq .[1])
 TESTER_ADDR=$(shell terraform output -json tester_address | jq .[1])
 FDB_ADDR=$(shell terraform output -json fdb_address | jq .[1])
@@ -19,10 +19,16 @@ help: ## Display help by printing target comments
 	awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 set-env:
+	@echo "aws_access_key = \"$(shell aws secretsmanager get-secret-value --secret-id  fdb_keys --query SecretString --output text | jq .fdb_keys_AK)\" " > "$(VARS)"
+	@echo "aws_secret_key = \"$(shell aws secretsmanager get-secret-value --secret-id  fdb_keys --query SecretString --output text | jq .fdb_keys_SK)\" " >> "$(VARS)"
+	@echo "aws_account_id = \"$(shell aws secretsmanager get-secret-value --secret-id  fdb_keys --query SecretString --output text | jq .fdb_keys_AcctID)\" " >> "$(VARS)"
 	@if [ ! -f "$(VARS)" ]; then \
 		echo "$(BOLD)$(ERROR)Could not find variables file: $(VARS)$(RESET)"; \
 		exit 1; \
 	fi
+
+del-vars:
+	@rm "$(VARS)"
 
 init: set-env
 	terraform init
