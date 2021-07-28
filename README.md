@@ -13,11 +13,11 @@ We can achieve that by:
    specific configuration.
 
 The first step is handled by the [Packer](https://www.packer.io), the
-second - by the [Terraform](https://www.terraform.io). If you're using 
+second - by the [Terraform](https://www.terraform.io). You will also need [jq](https://stedolan.github.io/jq/). If you're using 
 a Mac you can install them using homebrew:
 
 ```
-brew install packer terraform
+brew install packer terraform jq
 ```
 
 The scripts are based on [bitgn/fdb-cloud-test](https://github.com/bitgn/fdb-cloud-test)
