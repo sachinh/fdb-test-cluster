@@ -2,11 +2,11 @@ provider "aws" {
   access_key = "${var.aws_access_key}"
   secret_key = "${var.aws_secret_key}"
   region     = "${var.aws_region}"
-  version    = "~> 1.30"
+  version    = "~> 3.51.0"
 }
 
 provider "random" {
-  version    = "~> 1.3"
+  version    = "~> 3.1.0"
 }
 
 
@@ -126,6 +126,9 @@ resource "aws_instance" "fdb" {
 
     private_key = "${file(var.private_key_path)}"
     # The connection will use the local SSH agent for authentication.
+
+    # host ip needs to be provided
+    host = self.public_ip
   }
 
 
@@ -151,7 +154,8 @@ resource "aws_instance" "fdb" {
   # We're going to launch into the DB subnet
   subnet_id = "${aws_subnet.db.id}"
 
-  tags {
+  # tags is an assignment not a block
+  tags = {
     Name = "${format("fdb-%02d", count.index + 1)}"
     Project = "TF:poma"
   }
@@ -185,6 +189,9 @@ resource "aws_instance" "tester" {
 
     private_key = "${file(var.private_key_path)}"
     # The connection will use the local SSH agent for authentication.
+
+    # host ip needs to be provided
+    host = self.public_ip
   }
 
 
@@ -209,7 +216,8 @@ resource "aws_instance" "tester" {
   # We're going to launch into the DB subnet
   subnet_id = "${aws_subnet.db.id}"
 
-  tags {
+  # tags is an assignment not a block
+  tags = {
     Name = "${format("fdb-tester-%02d", count.index + 1)}"
     Project = "TF:poma"
   }

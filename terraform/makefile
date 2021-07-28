@@ -5,9 +5,12 @@ RESET=$(shell tput sgr0)
 
 VARS=".secret.aws.tfvars"
 CURRENT_FOLDER=$(shell basename "$$(pwd)")
-MASTER_ADDR=$(shell terraform output fdb_address | tr -d ',' | head -n 1)
-TESTER_ADDR=$(shell terraform output tester_address | tr -d ',')
-FDB_ADDR=$(shell terraform output fdb_address | tr -d ',')
+
+# Extract output simpler with jq
+MASTER_ADDR=$(shell terraform output -json fdb_address | jq .[1])
+TESTER_ADDR=$(shell terraform output -json tester_address | jq .[1])
+FDB_ADDR=$(shell terraform output -json fdb_address | jq .[1])
+
 FDB_CLUSTER=$(shell terraform output fdb_cluster)
 FDB_INIT_STRING=$(shell terraform output fdb_init_string)
 
